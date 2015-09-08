@@ -1,0 +1,31 @@
+# depslib dependency file v1.0
+1441671646 source:c:\a_personals\life_organizer\working_related\codingpractice\ippinger\main.cpp
+	<iostream>
+	<cmath>
+	<cstdio>
+	<vector>
+	<string>
+	<cstdlib>
+	<bitset>
+	<thread>
+	<map>
+	"ipPinger.h"
+
+1441670803 c:\a_personals\life_organizer\working_related\codingpractice\ippinger\ippinger.h
+	<cstdlib>
+	<string>
+	<vector>
+	<bitset>
+	<map>
+
+1441670959 source:c:\a_personals\life_organizer\working_related\codingpractice\ippinger\ippinger.cpp
+	<iostream>
+	<cstdlib>
+	<vector>
+	<bitset>
+	<string>
+	<sstream>
+	<stdlib.h>
+	<map>
+	"ipPinger.h"
+
