@@ -11,24 +11,20 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char * argv[])
 {
-    string usrInput;
+    if(argc !=2){
+        cout<<"Provide IP input in CIDR form"<<endl;
+        return 1;
+    }
 
-    cout << "enter the IP in CIDR form: " << endl;
-    cin >> usrInput;
-   // cout << usrInput;
+    string IP_CIDR = argv[1];  // ip address in CIDR format
+    //string IP_CIDR = "70.34.140.0/24";
 
-   // string IP_CIDR = "192.168.0.0/23";
-    string IP_CIDR = "70.34.140.0/24";
+    Pinger pinger = Pinger(IP_CIDR);  // create pinger object with input IP address
+    pinger.ipParse();   // parse input IP
 
-    Pinger pinger = Pinger(IP_CIDR);
-    pinger.ipParse();
-
-    pinger.setIpBound(pinger.getIpSegs(),pinger.getCidr());
-
-    cout<<"minCount is: "<<pinger.getMinCount()<<endl;
-    cout<<"maxCount is: "<<pinger.getMaxCount()<<endl;
+    pinger.setIpBound(pinger.getIpSegs(),pinger.getCidr());  // set the lowest and highest IP to ping
 
     // creating threads
     thread tlow(&Pinger::pingFromLow, &pinger, pinger.getLowestIp());
@@ -37,10 +33,7 @@ int main()
     tlow.join();
     thigh.join();
 
-    cout<<"minCount after: "<<pinger.getMinCount()<<endl;
-    cout<<"maxCount after: "<<pinger.getMaxCount()<<endl;
-    cout<<"first in map: "<<pinger.getMap().begin()->second<<endl;
-
+ //   cout<<"first in map: "<<pinger.getMap().begin()->second<<endl;
     return 0;
 }
 

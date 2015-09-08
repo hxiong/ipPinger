@@ -35,18 +35,50 @@ void Pinger::ipParse(){
     string delim = ".";
     size_t start = 0;
     size_t end = ipInputStr.find(delim);
+    int count=0;
+    int segVal=0;
+
+    // check for IP format
+    if(end == string::npos){
+        cout<<"Check your IP input!"<<endl;
+        return;
+    }
 
     while(end != string::npos){
         ipSegs.push_back(ipInputStr.substr(start,end - start));
+        // check if value is between 0-255
+        segVal=atoi(ipSegs.back().c_str());
+        if(segVal<0 || segVal>255){
+            cout<<"check your IP input"<<endl;
+            return;
+        }
         start = end + delim.length();
         end = ipInputStr.find(delim,start);
+        count++;
+    }
+
+    // check Input IP
+    if(count != 3){
+        cout<<"Check input format"<<endl;
+        return;
     }
     string temp1 = ipInputStr.substr(start,string::npos);
-
     size_t found = temp1.find('/');
-
     ipSegs.push_back(temp1.substr(0,found));
     cidr_modifier=atoi(temp1.substr(found+1).c_str());
+
+    // check for ip segment value
+    segVal=atoi(ipSegs.back().c_str());
+    if(segVal<0 || segVal>255){
+        cout<<"check your IP input"<<endl;
+        return;
+    }
+
+    // check for CIDR modifier
+    if(cidr_modifier<1 || cidr_modifier>31){
+        cout<<"Check your CIDR modifier"<<endl;
+        return;
+    }
 }
 
 // set lowest and highest ip to ping from
@@ -137,7 +169,6 @@ void Pinger::pingFromHigh(bitset<32> higestIp){
     string segStr;
     bitset<8> tbits;
     int flag=0;
-   // cout<<"highestIp is: "<<endl<<highestIp<<endl;
 
     while(maxCount > minCount){
         maxCount--;
